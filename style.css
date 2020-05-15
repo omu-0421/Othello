@@ -24,8 +24,6 @@ body {
     background-color: green;
 }
 
-
-
 [data-color="white"]::after,
 [data-color="black"]::after {
   conntent:'';
@@ -41,3 +39,4 @@ body {
 [data-color="black"]::after{
     background-color:black;
 }
+
