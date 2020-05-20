@@ -1,3 +1,5 @@
+console.log(window.confirm('ゲームスタート！準備はいい？'))
+
 let currentColor = 'black'
 
 window.onload = () => {
