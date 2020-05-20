@@ -1,82 +1,71 @@
-let currentcolor = 'black'
+let currentColor = 'black'
 
 window.onload = () => {
 
-    const rows = [1,2,3,4,5,6,7,8]
-    const columns = [1,2,3,4,5,6,7,8]
+  const rows = [1,2,3,4,5,6,7,8]
+  const columns = [1,2,3,4,5,6,7,8]
 
-    for (row of rows) {
-    　for (column of columns) {
-        document.querySelector('.grid-contaier').insertAdjacentHTML(
+  for (row of rows) {
+    for (column of columns){
+      document.querySelector('.grid-container').insertAdjacentHTML(
         'beforeend',
-        `<div class="grid-item" data-row="${row}" data-column="${column}"></div>`
-        )
-        }
+        '<div class="grid-item" data-row="${row}" data-column="${column}"></div>'
+      )
     }
+  }
 
-    Array.from(document.getElementsByClassName('grid-item')).forEach(element => {
-        element.addEventListener('click',(e) => {
-         e.target.dataset.color= currentcolor
 
-         const row = Number(e.target.dataset.row)
-         const column = Number(e.target.dataset.column)
+  Array.from(document.getElementsByClassName('grid-item')).forEach(element => {
+    element.addEventListener('click', (e) => {
+      e.target.dataset.color = currentColor
 
-         const functionList [
-             getUpLine,
-             getRightLine,
-             getDownLine
-             getLeftLine,
-             getUpRightLine,
-             getDownRihgtLine,
-             getUpLeftLine,
-             getDownLeftLine
-         ]
+      const row = Number(e.target.dataset.row)
+      const column = Number(e.target.dataset.column)
 
-         for (const fn of functionList) {
+      //上方向のマスを全部とる
+      squares = getUpLine(row, column)
 
-         //マスを全部とる
-         squares = fn(row, column)
+      //本当にひっくり返したいマス目の配列
+      squaresToBeReversed =getTarget(squares)
 
-         //本当にひっくり返したいマス目の配列
-         squarestobereversed = gettarget(squares)
+      squaresToBeReversed.forEach(el => {el.dataset.color = currentColor} )
+      
+      currentColor = enemyColor()
+    })
+  })
+}
 
-         //ひっくり返す
-         squarestobereversed.forEach(el =>{el.dataset.color= currentcolor})
+const enemyColor = () => {
+  return (currentColor == 'black') ? 'white' : 'black'
+}
 
-         currentcolor = enemycolor()
-
-         }）
+/**
+ *
+ * @param {integer} row
+ * @param {integer} column
+ * @returns {array}
+ */
+const getUpLine = (row,column) => {
+  result = []
+  for (i = row - 1; i > 0; i--)  {
+    result.push(document.querySelector('[data-row="${i}"][data-column="${column}"]'))
+  }
+  return result
 
 }
 
-const enemycolor = () => {
-   if (currentcolor == 'black') ? 'white' : 'black'
-}
+const getTarget = (squares) => {
+  result = []
+  for (square of squares) {
+    const color = square.dataset.color
 
-@param {integer} row
-@param {integer} column
-@return {array}
-
-const getupline = (row) => {
-    result = []
-    for (i = row - 1; i >0; i--) {
-        result.push(document.querySelector('[data-row="${i}"][data-column=${column}]'))
+    if (color == enemyColor()) {
+      result.push(square)
+    } else if (color == currentColor){
+      return result
+    } else {
+      return[]
     }
-    return result
-}
-
-const gettarget = (squares) => {
-    result = []
-    for (const square of squares) {
-      const color = square.dataset.color
-
-      if (color == enemycolor()) {
-        result.push(square)
-      } else if (color == currentcolor){
-        return result
-      } else {
-        return[]
-      }
-    }
-    return []
+  }
+  return []
 }
