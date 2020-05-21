@@ -31,7 +31,6 @@ window.onload = () => {
       squaresToBeReversed =getTarget(squares)
 
       squaresToBeReversed.forEach(el => {el.dataset.color = currentColor} )
-      
       currentColor = enemyColor()
     })
   })
