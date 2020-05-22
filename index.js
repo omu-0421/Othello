@@ -24,13 +24,28 @@ window.onload = () => {
       const row = Number(e.target.dataset.row)
       const column = Number(e.target.dataset.column)
 
-      //上方向のマスを全部とる
-      squares = getUpLine(row, column)
+      //動画1:39
+      const functionList = [
+        getUpLine,
+        getRightLine,
+        getDownLine,
+        getLeftLine,
+        getUpRightLine,
+        getDownRightLine,
+        getUpLeftLine,
+        getDownLeftLine,
+      ]
 
-      //本当にひっくり返したいマス目の配列
-      squaresToBeReversed =getTarget(squares)
+      for (const fn of functionList){
+       //上方向のマスを全部とる
+       squares = fn(row, column)
 
-      squaresToBeReversed.forEach(el => {el.dataset.color = currentColor} )
+       //本当にひっくり返したいマス目の配列
+       squaresToBeReversed = getTarget(squares)
+       //ひっくり返す
+       squaresToBeReversed.forEach(el => {el.dataset.color = currentColor})
+
+      }
       currentColor = enemyColor()
     })
   })
@@ -44,7 +59,7 @@ const enemyColor = () => {
  *
  * @param {integer} row
  * @param {integer} column
- * @returns {array}
+ * @return {array}
  */
 const getUpLine = (row,column) => {
   result = []
@@ -54,6 +69,82 @@ const getUpLine = (row,column) => {
   return result
 
 }
+
+/**
+ *
+ * @param {integer} row
+ * @param {integer} column
+ * @return {array}
+ */
+const getDownLine = (row,column) => {
+  result = []
+  for (i = row - 1; i > 0; i--)  {
+    result.push(document.querySelector('[data-row="${i}"][data-column="${column}"]'))
+  }
+  return result
+
+}
+
+/**
+ *
+ * @param {integer} row
+ * @param {integer} column
+ * @return {array}
+ */
+const getRightLine = (row,column) => {
+  result = []
+  for (i = row + 1; i < 9; i++)  {
+    result.push(document.querySelector('[data-row="${row}"][data-column="${i}"]'))
+  }
+  return result
+
+}
+
+/**
+ *
+ * @param {integer} row
+ * @param {integer} column
+ * @return {array}
+ */
+const getUpRightLine = (row,column) => {
+  result = []
+  let r = row, C = column
+  while (r > 0 && c < 9) {
+    r -= 1
+    c += 1
+    result.push(document.querySelector('[data-row="${r}"][data-column="${c}"]'))
+  }
+  return result
+
+}
+
+/**
+ *
+ * @param {integer} row
+ * @param {integer} column
+ * @returns {array}
+ */
+const getDownRightLine = (row,column) => {
+  result = []
+  while (true) {
+    row += 1,column -= 1
+    if(!checkInBoard(row, column)) { break }
+    result.push(document.querySelector('[data-row="${row}"][data-column="${column}"]'))
+  }
+  return result
+
+
+/**
+ *
+ * @param {integer} row
+ * @param {integer} column
+ * @return {bool}
+ */
+const checkInBoard = (row, column) => {
+  return (row > 0 && column > 0 && row <9 && column < 9)
+}
+
+
 
 const getTarget = (squares) => {
   result = []
