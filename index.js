@@ -106,6 +106,23 @@ const getRightLine = (row,column) => {
  * @param {integer} column
  * @return {array}
  */
+const getLeftLine = (row,column) => {
+  result = []
+  for (i = row + 1; i < 9; i++)  {
+    result.push(document.querySelector('[data-row="${row}"][data-column="${i}"]'))
+  }
+  return result
+
+}
+
+
+
+/**
+ *
+ * @param {integer} row
+ * @param {integer} column
+ * @return {array}
+ */
 const getUpRightLine = (row,column) => {
   result = []
   let r = row, C = column
@@ -113,6 +130,24 @@ const getUpRightLine = (row,column) => {
     r -= 1
     c += 1
     result.push(document.querySelector('[data-row="${r}"][data-column="${c}"]'))
+  }
+  return result
+
+}
+
+/**
+ *
+ * @param {integer} row
+ * @param {integer} column
+ * @return {array}
+ */
+const getUpLeftLine = (row,column) => {
+  result = []
+  let r = row, C = column
+  while (r > 0 && c < 9) {
+    r += 1
+    c -= 1
+    result.push(document.querySelector('[data-row="${c}"][data-column="${r}"]'))
   }
   return result
 
@@ -132,19 +167,23 @@ const getDownRightLine = (row,column) => {
     result.push(document.querySelector('[data-row="${row}"][data-column="${column}"]'))
   }
   return result
-
+}
 
 /**
  *
  * @param {integer} row
  * @param {integer} column
- * @return {bool}
+ * @returns {array}
  */
-const checkInBoard = (row, column) => {
-  return (row > 0 && column > 0 && row <9 && column < 9)
+const getDownLeftLine = (row,column) => {
+  result = []
+  while (true) {
+    row -= 1,column += 1
+    if(!checkInBoard(row, column)) { break }
+    result.push(document.querySelector('[data-row="${column}"][data-column="${row}"]'))
+  }
+  return result
 }
-
-
 
 const getTarget = (squares) => {
   result = []
