@@ -64,7 +64,7 @@ const enemyColor = () => {
 const getUpLine = (row,column) => {
   result = []
   for (i = row - 1; i > 0; i--)  {
-    result.push(document.querySelector('[data-row="${i}"][data-column="${column}"]'))
+    result.push(document.querySelector(`[data-row="${i}"][data-column="${column}"]`))
   }
   return result
 
@@ -79,43 +79,11 @@ const getUpLine = (row,column) => {
 const getDownLine = (row,column) => {
   result = []
   for (i = row - 1; i > 0; i--)  {
-    result.push(document.querySelector('[data-row="${i}"][data-column="${column}"]'))
+    result.push(document.querySelector(`[data-row="${i}"][data-column="${column}"]`))
   }
   return result
 
 }
-
-/**
- *
- * @param {integer} row
- * @param {integer} column
- * @return {array}
- */
-const getRightLine = (row,column) => {
-  result = []
-  for (i = row + 1; i < 9; i++)  {
-    result.push(document.querySelector('[data-row="${row}"][data-column="${i}"]'))
-  }
-  return result
-
-}
-
-/**
- *
- * @param {integer} row
- * @param {integer} column
- * @return {array}
- */
-const getLeftLine = (row,column) => {
-  result = []
-  for (i = row + 1; i < 9; i++)  {
-    result.push(document.querySelector('[data-row="${row}"][data-column="${i}"]'))
-  }
-  return result
-
-}
-
-
 
 /**
  *
@@ -125,49 +93,26 @@ const getLeftLine = (row,column) => {
  */
 const getUpRightLine = (row,column) => {
   result = []
-  let r = row, C = column
-  while (r > 0 && c < 9) {
-    r -= 1
-    c += 1
-    result.push(document.querySelector('[data-row="${r}"][data-column="${c}"]'))
-  }
-  return result
-
-}
-
-/**
- *
- * @param {integer} row
- * @param {integer} column
- * @return {array}
- */
-const getUpLeftLine = (row,column) => {
-  result = []
-  let r = row, C = column
-  while (r > 0 && c < 9) {
-    r += 1
-    c -= 1
-    result.push(document.querySelector('[data-row="${c}"][data-column="${r}"]'))
-  }
-  return result
-
-}
-
-/**
- *
- * @param {integer} row
- * @param {integer} column
- * @returns {array}
- */
-const getDownRightLine = (row,column) => {
-  result = []
   while (true) {
-    row += 1,column -= 1
-    if(!checkInBoard(row, column)) { break }
-    result.push(document.querySelector('[data-row="${row}"][data-column="${column}"]'))
+    row -= 1, column += 1
+    if (!checkInBoard(row,column)) {break}
+    result.push(document.querySelector(`[data-row="${r}"][data-column="${c}"]`))
   }
   return result
+
 }
+
+const checkInBoard(row,column) => {
+  result (row > 0 && column > 0 && row < 9 && column < 9)
+}
+
+/**
+ *
+ * @param {integer} row
+ * @param {integer} column
+ * @return {bool}
+ */
+
 
 /**
  *
@@ -180,10 +125,12 @@ const getDownLeftLine = (row,column) => {
   while (true) {
     row -= 1,column += 1
     if(!checkInBoard(row, column)) { break }
-    result.push(document.querySelector('[data-row="${column}"][data-column="${row}"]'))
+    result.push(document.querySelector(`[data-row="${column}"][data-column="${row}"]`))
   }
   return result
 }
+
+
 
 const getTarget = (squares) => {
   result = []
